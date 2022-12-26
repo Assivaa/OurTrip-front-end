@@ -3,6 +3,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { createPost } from '../../redux/actions/post';
 import '../CreatePost.css';
 
@@ -98,11 +99,24 @@ function CreatePost() {
         content
     };
 
+    const messageAlert = () => {
+        Swal.fire({
+            title: success ? 'Success' : 'Error',
+            text: message,
+            icon: success ? 'success' : 'error',
+        }).then(function () {
+            if (success) {
+                window.location.href = "/";
+            }
+        });
+    }
+
     const handleCreatePost = () => {
+        setSuccess(true);
         dispatch(createPost(dataPost))
             .then(() => {
                 setSuccess(true);
-                setTimeout( () => navigate('/'),3000)
+                // setTimeout( () => navigate('/'),3000)
             })
             .catch(() => {
                 setSuccess(false);
@@ -115,21 +129,22 @@ function CreatePost() {
     }
 
     return(
-        <React.Fragment>
+        <React.Fragment>     
             <h1 className='title-form'><span>Create Post</span></h1>
             
             <div className="container">
             {message && (
-                        <div className="form-group row mb-3 mt-3" style={{marginRight: '20px', marginLeft: '20px'}}>
-                            <div className={`alert alert-${success ? 'success' : 'danger'}`} role="alert">
-                                {message}
-                            </div>
-                        </div>
+                        // <div className="form-group row mb-3 mt-3" style={{marginRight: '20px', marginLeft: '20px'}}>
+                        //     <div className={`alert alert-${success ? 'success' : 'danger'}`} role="alert">
+                        //         {message}
+                        //     </div>
+                        // </div>
+                        messageAlert()
                     )}
                 <form onSubmit={handleSubmit}>
                     <div className="row mb-3 form-group">
                         <div className="col-sm-1">
-                            <label for="title">Title</label>
+                            <label htmlFor="title">Title</label>
                         </div>
                         <div className="col-sm-11">
                             <input type="text" className="form-control" id="title" name="title" value={title} onChange={onChangeTitle} placeholder="Title of your Post" required/>
@@ -137,7 +152,7 @@ function CreatePost() {
                     </div>
                     <div className="row mb-3 form-group">
                         <div className="col-sm-1">
-                            <label for="place">Place</label>
+                            <label htmlFor="place">Place</label>
                         </div>
                         <div className="col-sm-11">
                             <input type="text" className="form-control" id="place" name="place" value={place} onChange={onChangePlace} placeholder="Place you want to tell" required/>
@@ -145,7 +160,7 @@ function CreatePost() {
                     </div>
                     <div className="row mb-3 form-group">
                         <div className="col-sm-1">
-                            <label for="image">Image</label>
+                            <label htmlFor="image">Image</label>
                         </div>
                         <div className="col-sm-11">
                             <input type="file" className="form-control" id="image" name="image" onChange={handleFileInputChange} required/>
@@ -153,7 +168,7 @@ function CreatePost() {
                     </div>
                     <div className="row mb-3 form-group">
                         <div className="col-sm-1">
-                            <label for="content">Content</label>
+                            <label htmlFor="content">Content</label>
                         </div>
                         <div className="col-sm-11">
                             <ReactQuill 

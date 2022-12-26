@@ -1,29 +1,30 @@
 import '../DetailPost.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import postService from '../../services/post';
-import { useDispatch } from 'react-redux';
 
-const API_URL =  'https://sugary-gifted-enthusiasm.glitch.me/';
+const API_URL =  'http://localhost:8000/';
 function DetailPost() {
     const data = {};
     const [currentPost, setCurrentPost] = useState(data);
-    const location = useLocation();
     const params = useParams();
-    const dispatch = useDispatch();
-    // const navigate = useNavigate();
-    // console.log(location)
 
-    const getPost = id => {
+    const getPost = async id => {
         postService.get(id)
             .then(response => {
                 setCurrentPost(response.data);
+                // console.log(response.data)
             })
             .catch(err => console.log(err));
     };
 
+    // const tes = async () => {
+    //     console.log("Tes useEFFECT")
+    // }
+
     useEffect(() => {
+        // tes();
         getPost(params.id);
     }, [params.id]);
     // console.log(params.id)
@@ -38,19 +39,27 @@ function DetailPost() {
                     <div className="row">
                         <div className="col-lg-12">
                         <div className="blog-post">
-                            <div className="blog-thumb">
-                            <img src={API_URL+currentPost.data.image} alt=""/>
-                            </div>
-                            <div className="down-content">
-                            <h4>{currentPost.data.title}</h4>
-                            <ul className="post-info">
-                                <li><a href="google.com">{currentPost.data.user_first_name+" "+currentPost.data.user_last_name}</a></li>
-                                <li><a href="google.com">{currentPost.data.createdAt.slice(0,15)}</a></li>
-                                <li><a href="#getComments">{currentPost.data.comments.length+" Comments"}</a></li>
-                            </ul>
-                            <div 
-                                dangerouslySetInnerHTML={{__html: currentPost.data.content}}
-                            />
+                            { currentPost.data ?
+                                <React.Fragment>
+                                    <div className="blog-thumb">
+                                <img src={API_URL+currentPost.data.image} alt=""/>
+                                </div>
+                                <div className="down-content">
+                                    <h4>{currentPost.data.title}</h4>
+                                    <ul className="post-info">
+                                        <li><a href="google.com">{currentPost.data.user_first_name+" "+currentPost.data.user_last_name}</a></li>
+                                        <li><a href="google.com">{currentPost.data.createdAt.slice(0,15)}</a></li>
+                                        <li><a href="#getComments">{currentPost.data.comments.length+" Comments"}</a></li>
+                                    </ul>
+                                    <div 
+                                        className='from-quill'
+                                        dangerouslySetInnerHTML={{__html: currentPost.data.content}}
+                                    />
+                                 </div>
+                                </React.Fragment>
+                                :
+                                ''
+                            }
                             {/* <div className="post-options">
                                 <div className="row align-items-end">
                                     <div className="col">
@@ -62,7 +71,6 @@ function DetailPost() {
                                     </div>
                                 </div>
                             </div> */}
-                            </div>
                         </div>
                         </div>
                         <div className="col-lg-12">

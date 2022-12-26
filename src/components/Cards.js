@@ -4,7 +4,7 @@ import postService from '../services/post';
 import CardItem from './CardItem';
 import './Cards.css';
 
-const API_URL =  'https://sugary-gifted-enthusiasm.glitch.me/';
+const API_URL =  'http://localhost:8000/';
 function Cards() {
   // const navigate = useNavigate();
   // const toDetailPost = (postId) => {
@@ -66,7 +66,7 @@ function Cards() {
               </ul> */}
               <ul className="cards__items">
                 {
-                  posts?.map((post) => (
+                  posts ? posts.slice(0,2)?.map((post) => (
                     <CardItem 
                     key={post.id}
                     src={API_URL+post.image}
@@ -75,6 +75,20 @@ function Cards() {
                     path={"/detail-post/"+post.id}
                     />
                   ))
+                  : ''
+                }
+              </ul> 
+              <ul className="cards__items">
+                {
+                  posts ? posts.slice(2)?.map((post) => (
+                    <CardItem 
+                    key={post.id}
+                    src={API_URL+post.image}
+                    text={post.title}
+                    label={post.place}
+                    path={"/detail-post/"+post.id}
+                    />
+                  )) : ''
                 }
               </ul> 
              </div>
