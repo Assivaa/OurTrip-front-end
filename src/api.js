@@ -1,7 +1,7 @@
 import axios from "axios";
 const user = JSON.parse(localStorage.getItem('user'));
 export default axios.create({
-    baseURL: 'http://localhost:8000/',
+    baseURL: 'https://sugary-gifted-enthusiasm.glitch.me/',
     headers: {
         'Access-Control-Allow-Origin': '*',
         'Accept': 'application/json',

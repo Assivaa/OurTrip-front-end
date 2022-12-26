@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import postService from '../../services/post';
 
-const API_URL =  'http://localhost:8000/';
+const API_URL =  'https://sugary-gifted-enthusiasm.glitch.me/';
 function DetailPost() {
     const data = {};
     const [currentPost, setCurrentPost] = useState(data);

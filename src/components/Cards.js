@@ -4,7 +4,7 @@ import postService from '../services/post';
 import CardItem from './CardItem';
 import './Cards.css';
 
-const API_URL =  'http://localhost:8000/';
+const API_URL =  'https://sugary-gifted-enthusiasm.glitch.me/';
 function Cards() {
   // const navigate = useNavigate();
   // const toDetailPost = (postId) => {
